@@ -12,20 +12,14 @@ en_pirate:
       started_sharing_with: "You have started sharing with <%= name %>!"
       stopped_sharing_with: "You have stopped sharing with <%= name %>."
       toggle:
-        few: "In {{count}} aspects"
-        many: "In {{count}} aspects"
         one: "In <%= count %> aspect"
         other: "In <%= count %> aspects"
-        two: "In <%= count %> aspects"
         zero: "Add to aspect"
     getting_started:
       hey: "Hey, <%= name %>!"
       preparing_your_stream: "Preparing your personialized stream..."
     header:
       search: "Find people or #tags"
-    reshares:
-      duplicate: "You've already reshared that post!"
-    search_for: "Search for <%= name %>"
     stream:
       likes:
         few: "<%= count %> Likes"
@@ -55,5 +49,3 @@ en_pirate:
       prefixFromNow: ""
       suffixAgo: ""
       suffixFromNow: ""
-    videos:
-      watch: "Watch this video on <%= provider %>"
