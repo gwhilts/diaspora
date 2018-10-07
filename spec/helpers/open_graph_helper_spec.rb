@@ -1,6 +1,7 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe OpenGraphHelper do
+describe OpenGraphHelper, :type => :helper do
+
   describe 'og_html' do
     scenarios = {
       "article" => {
@@ -21,10 +22,10 @@ describe OpenGraphHelper do
 
         formatted = og_html(cache)
 
-        formatted.should =~ /#{data['url']}/
-        formatted.should =~ /#{data['title']}/
-        formatted.should =~ /#{data['image']}/
-        formatted.should =~ /#{data['description']}/
+        expect(formatted).to match(/#{data['url']}/)
+        expect(formatted).to match(/#{data['title']}/)
+        expect(formatted).to match(/#{data['image']}/)
+        expect(formatted).to match(/#{data['description']}/)
       end
     end
   end

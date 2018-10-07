@@ -1,34 +1,33 @@
-.span-15.last
-  .span-3
-    .icons-monotone_email_letter_round
-
-  .span-12.last
-    %h2
-      = t('.invite_someone_to_join')
-      %br
-  .span-7.append-1.last
-    %b= t('.paste_link')
-    %br
-    %br
+#paste_link
+  = t(".paste_link")
+  %span#codes_left
+    = "(" + t(".codes_left", count: @invite_code.count) + ")" unless AppConfig.settings.enable_registrations?
+.form-horizontal
+  .control-group
     = invite_link(@invite_code)
-    = t('.codes_left', :count => @invite_code.count)
-    %br
-    %br
-    #email_invitation
 
-      = form_tag new_user_invitation_path  do
-        %h4
-          = t('email')
-        = text_field_tag 'email_inviter[emails]', @invalid_emails, :title => t('.comma_separated_plz'), :placeholder => 'foo@bar.com, max@foo.com...'
-        %p
-          = t('invitations.create.note_already_sent', :emails => @valid_emails) unless @valid_emails.empty?
-        %br
+- if AppConfig.mail.enable?
+  #email_invitation
+    = form_tag new_user_invitation_path, class: "form-horizontal" do
 
-        %h4
-          = t('.language')
-        = select_tag('email_inviter[locale]',  options_from_collection_for_select(available_language_options, "second", "first", :selected => current_user.language))
+      .form-group
+        %label.col-sm-2.control-label{for: "email_inviter_emails"}
+          = t("email")
+        .col-sm-10
+          = text_field_tag "email_inviter[emails]", @invalid_emails, title: t(".comma_separated_plz"),
+              placeholder: "foo@bar.com, max@foo.com...", class: "form-control"
+          #already_sent
+            = t("invitations.create.note_already_sent", emails: @valid_emails) unless @valid_emails.empty?
 
-        %br
+      .form-group
+        %label.col-sm-2.control-label{for: "email_inviter_locale"}
+          = t(".language")
+        .col-sm-10
+          = select_tag "email_inviter[locale]", options_from_collection_for_select(available_language_options,
+              "second", "first", selected: current_user.language), class: "form-control"
 
-        %p
-          = submit_tag t('.send_an_invitation'), :disable_with => t('.sending_invitation')
+      .form-group
+        .pull-right.col-md-12
+          = submit_tag t(".send_an_invitation"), class: "btn btn-primary pull-right",
+              data: {disable_with: t(".sending_invitation")}
+        .clearfix

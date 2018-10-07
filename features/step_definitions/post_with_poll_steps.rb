@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 Then /^I should see ([1-9]+) options?$/ do |number|
-  find("#publisher-poll-creator").all(".poll-answer").count.should eql(number.to_i)
+  find("#poll_creator_container").all(".poll-answer").count.should eql(number.to_i)
 end
 
 And /^I delete the last option$/ do
-  find("#publisher-poll-creator").all(".poll-answer .remove-answer").first.click
+  find("#poll_creator_container").all(".poll-answer .remove-answer").first.click
 end
 
 And /^I should not see a remove icon$/ do
@@ -13,19 +15,24 @@ end
 When /^I fill in the following for the options:$/ do |table|
   i = 0
   table.raw.flatten.each do |value|
-    all(".poll-answer input")[i].set(value)
+    all(".poll-answer input")[i].native.send_keys(value)
     i+=1
   end
 end
 
 When /^I check the first option$/ do
-  page.should have_css('.poll_form input')
-  first(".poll_form input").click
+  page.should have_css(".poll-form input")
+  first(".poll-form input").click
 end
 
-And /^I press the element "([^"]*)"$/ do |selector|
-  page.should have_css(selector)
-  find(selector).click
+When(/^I fill in values for the first two options$/) do
+  all(".poll-answer input").each_with_index do |answer, i|
+    answer.native.send_keys "answer option #{i}"
+  end
+end
+
+When(/^I lose focus$/) do
+  find("#poll_creator_container").click
 end
 
 Then /^I should see an element "([^"]*)"$/ do |selector|

@@ -1,7 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
 
-describe Service do
-
+describe Service, :type => :model do
   before do
     @post = alice.post(:status_message, :text => "hello", :to => alice.aspects.first.id)
     @service = Services::Facebook.new(:access_token => "yeah", :uid => 1)
@@ -15,7 +14,7 @@ describe Service do
 
     alice.services << second_service
     alice.services.last.save
-    alice.services.last.should be_invalid
+    expect(alice.services.last).to be_invalid
   end
 
   it 'by default has no profile photo url' do
